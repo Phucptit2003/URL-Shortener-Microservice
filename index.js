@@ -11,7 +11,7 @@ app.use("/public", express.static(path.join(__dirname, "public")));
 
 // trang chủ hiển thị form upload
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.sendFile(path.join(__dirname, "views/index.html"));
 });
 
 // cấu hình multer dùng memoryStorage
