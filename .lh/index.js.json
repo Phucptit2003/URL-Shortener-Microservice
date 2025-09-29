@@ -1,0 +1,18 @@
+{
+    "sourceFile": "index.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1759121319414,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1759121319414,
+            "name": "Commit-0",
+            "content": "const express = require('express');\r\nconst cors = require('cors');\r\nconst multer = require('multer');\r\nconst path = require('path');\r\n\r\n\r\nconst app = express();\r\napp.use(cors());\r\napp.use(express.static(path.join(__dirname, 'public')));\r\n\r\n\r\n// Setup multer: lưu file tạm vào /uploads\r\nconst storage = multer.diskStorage({\r\ndestination: (req, file, cb) => cb(null, 'uploads/'),\r\nfilename: (req, file, cb) => cb(null, file.originalname)\r\n});\r\nconst upload = multer({ storage });\r\n\r\n\r\n// Root\r\napp.get('/', (req, res) => {\r\nres.sendFile(path.join(__dirname, 'public', 'index.html'));\r\n});\r\n\r\n\r\n// POST /api/fileanalyse or /api/fileanalyse\r\napp.post('/api/fileanalyse', upload.single('upfile'), (req, res) => {\r\nif (!req.file) return res.status(400).json({ error: 'No file uploaded' });\r\n\r\n\r\nconst { originalname, mimetype, size } = req.file;\r\nres.json({ name: originalname, type: mimetype, size });\r\n});\r\n\r\n\r\n// also support legacy route\r\napp.post('/api/filemeta', upload.single('upfile'), (req, res) => {\r\nif (!req.file) return res.status(400).json({ error: 'No file uploaded' });\r\nconst { originalname, mimetype, size } = req.file;\r\nres.json({ name: originalname, type: mimetype, size });\r\n});\r\n\r\n\r\nconst PORT = process.env.PORT || 3000;\r\napp.listen(PORT, () => console.log(`Server running on port ${PORT}`));"
+        }
+    ]
+}
